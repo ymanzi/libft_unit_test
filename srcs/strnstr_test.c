@@ -59,8 +59,7 @@ void	strnstr_test()
 	int		len[10];
 	char	*str;
 
-	str = "strnstr: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ STRNSTR TEST ~~~~~~~\n" RESET "");
 	strnstr_segv_test();
 	strnstr_segv_test2();
 	tab[0] = "";
@@ -75,17 +74,13 @@ felis \xff\xff purus. Mauris magna ex, mollis \x02\x01 suscipit eu, lacinia ac t
 ac tortor et lectus fermentum lobortis eu at mauris. Vestibulum sit amet posuere\
 tortor, sit amet consequat amet.";
 	tab[5] = "\xfe\xff";
-	tab[6] = "\x02\x01";
-	tab[7] = "\x01\x02";
-	tab[8] = "\xff\xff";
-	tab[9] = "\xff\xfe";
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 6; i++)
 		len[i] = strlen(tab[i]);
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 6; i++)
 	{
-		for (int k = 0; k < 10; k++)
+		for (int k = 0; k < 6; k++)
 		{
-			for (int j = 0; j < 10; j++)
+			for (int j = 0; j < 6; j++)
 				strnstr_t(tab[i], tab[k], len[j]);
 		}
 	}

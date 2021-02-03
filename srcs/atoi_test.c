@@ -32,10 +32,7 @@ void	atoi_t(char *s1)
 
 void	atoi_test()
 {
-	char	*str;
-
-	str = "atoi: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ ATOI TEST ~~~~~~~\n" RESET "");
 	atoi_segv_test();
 	atoi_t("");
 	atoi_t("+-+1");
@@ -53,5 +50,6 @@ void	atoi_test()
 	atoi_t("2147483647");
 	atoi_t("2147484647");
 	atoi_t("4548478646489885464642319879784564");
+	atoi_t("-4548478646489885464642319879784564");
 	printf("\n");
 }

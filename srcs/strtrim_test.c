@@ -60,8 +60,7 @@ void	strtrim_test()
 	int		len[11];
 	char	*str;
 
-	str = "strtrim: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ STRTRIM TEST ~~~~~~~\n" RESET "");
 	strtrim_segv_test();
 	strtrim_segv_test2();
 	tab[0] = "mmeerrooll adipiscing lloorreemm";

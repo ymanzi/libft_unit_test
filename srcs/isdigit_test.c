@@ -10,10 +10,7 @@ void	isdigit_t(char s1)
 
 void	isdigit_test()
 {
-	char	*str;
-
-	str = "isdigit: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ ISDIGIT TEST ~~~~~~~\n" RESET "");
 	isdigit_t('0');
 	isdigit_t('\xfe');
 	isdigit_t('A');

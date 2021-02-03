@@ -10,10 +10,7 @@ void	isalnum_t(char s1)
 
 void	isalnum_test()
 {
-	char	*str;
-
-	str = "isalnum: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ ISALNUM TEST ~~~~~~~\n" RESET "");
 	isalnum_t('0');
 	isalnum_t('\xfe');
 	isalnum_t('A');

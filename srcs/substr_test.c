@@ -1,54 +1,50 @@
 #include "ft_libft_test.h"
 
-void segv_test_memchr()
+void segv_test_substr1()
 {
 	signal(SIGSEGV, handler);
-	ft_memchr(0, 12, 5);
+	ft_substr(0, 0, 4);
 	exit(1);
 }
 
-void memchr_segv_test()
+void substr_segv_test()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_memchr();
+		segv_test_substr1();
 	wait(&status);
-	if (status)
+	if (!status)
 		printf("" RED "[SEGV K.O] " RESET "");
 	else
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-void	memchr_test()
+void	substr_test()
 {
-	char	buf[100];
-	char	*ret;
+	char	*buff;
+	char	*str;
 
-	write(1, "memchr:  ", 9);
-	memchr_segv_test();
-	memcpy(buf, "abcdef", 6);
-	if (ft_memchr(buf, 0, 3))
+	printf("" YELLOW "~~~~~~~ SUBSTR TEST ~~~~~~~\n" RESET "");
+	substr_segv_test();
+	buff = "un jour dans la prairie";	
+	if (strcmp(ft_substr(buff, 0, 3), "un "))
 		printf("" RED "[K.O] " RESET "");
 	else
 		printf("" GREEN "[OK] " RESET "");
-	if (!ft_memchr(buf, 0, 7))
+	if (strcmp(ft_substr(buff, 42, 3), ""))
 		printf("" RED "[K.O] " RESET "");
 	else
 		printf("" GREEN "[OK] " RESET "");
-	if (ft_memchr(buf, '\t', 6))
+	if (strcmp(ft_substr(buff, 0, 46), buff))
 		printf("" RED "[K.O] " RESET "");
 	else
 		printf("" GREEN "[OK] " RESET "");
-	if (ft_memchr(buf, 'd', 3))
+	if (strcmp(ft_substr(buff, 5, 6), "ur dan"))
 		printf("" RED "[K.O] " RESET "");
 	else
 		printf("" GREEN "[OK] " RESET "");
-	if ((ret = ft_memchr(buf, 'd', 6)) && !strcmp(ret, "def"))
-		printf("" GREEN "[OK] " RESET "");
-	else
-		printf("" RED "[K.O] " RESET "");
 	printf("\n");
 }

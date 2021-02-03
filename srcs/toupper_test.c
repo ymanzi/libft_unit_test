@@ -12,8 +12,7 @@ void	toupper_test()
 {
 	char	*str;
 
-	str = "toupper: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ TOUPPER TEST ~~~~~~~\n" RESET "");
 	toupper_t('0');
 	toupper_t('\xfe');
 	toupper_t('A');

@@ -12,8 +12,7 @@ void	tolower_test()
 {
 	char	*str;
 
-	str = "tolower: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ TOLOWER TEST ~~~~~~~\n" RESET "");
 	tolower_t('0');
 	tolower_t('\xfe');
 	tolower_t('A');

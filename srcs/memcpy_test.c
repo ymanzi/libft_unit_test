@@ -53,8 +53,7 @@ void	memcpy_test()
 	char	*str;
 
 	bzero(buff, 100);
-	str = "memcpy: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ MEMCPY TEST ~~~~~~~\n" RESET "");
 	memcpy_segv_test();
 	memcpy_segv_test2();
 	ft_memcpy(buff, "Lol", 4);

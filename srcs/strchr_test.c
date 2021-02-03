@@ -1,20 +1,20 @@
 #include "ft_libft_test.h"
 
-void segv_test_strlen1()
+void segv_test_strchr()
 {
 	signal(SIGSEGV, handler);
-	ft_strlen(0);
+	ft_strchr(0, 12);
 	exit(1);
 }
 
-void strlen_segv_test()
+void strchr_segv_test()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_strlen1();
+		segv_test_strchr();
 	wait(&status);
 	if (status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -22,23 +22,21 @@ void strlen_segv_test()
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-void	strlen_t(char *s1)
+void	strchr_t(char *str, char c)
 {
-	if (ft_strlen(s1) == strlen(s1))
+	if (ft_strchr(str, c) == strchr(str, c))
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");
 }
 
-void	strlen_test()
+void	strchr_test()
 {
-	char	*str;
 	char	*tab[11];
+	char	c[5];
 
-	str = "strlen: ";
-	write(1, str, strlen(str));
-	strlen_segv_test();
-	
+	printf("" YELLOW "~~~~~~~ STRCHR TEST ~~~~~~~\n" RESET "");
+	strchr_segv_test();
 	tab[0] = "lol";
 	tab[1] = " ";
 	tab[2] = "bon";
@@ -56,7 +54,17 @@ tortor, sit amet consequat amet.";
 	tab[8] = "\x01\x02";
 	tab[9] = "\xff\xff";
 	tab[10] = "\xff\xfe";
+
+	c[0] = '\0';
+	c[1] = '\xfe';
+	c[2] = '\x02';
+	c[3] = 'r';
+	c[4] = '\n';
+
 	for (int i = 0; i < 11; i++)
-		strlen_t(tab[i]);
+	{
+		for (int j = 0; j < 5; j++)
+			strchr_t(tab[i], c[j]);
+	}
 	printf("\n");
 }

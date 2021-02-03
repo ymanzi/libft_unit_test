@@ -10,10 +10,7 @@ void	isalpha_t(char s1)
 
 void	isalpha_test()
 {
-	char	*str;
-
-	str = "isalpha: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ ISALPHA TEST ~~~~~~~\n" RESET "");
 	isalpha_t('0');
 	isalpha_t('\xfe');
 	isalpha_t('A');

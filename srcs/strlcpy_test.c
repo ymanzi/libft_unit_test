@@ -1,29 +1,29 @@
 #include "ft_libft_test.h"
 
-void segv_test_strlcat1()
+void segv_test_strlcpy1()
 {
 	signal(SIGSEGV, handler);
-	ft_strlcat(0, "abcdef", 4);
+	ft_strlcpy(0, "abcdef", 4);
 	exit(1);
 }
 
-void segv_test_strlcat2()
+void segv_test_strlcpy2()
 {
 	char	buff[100];
 
 	signal(SIGSEGV, handler);
-	ft_strlcat(buff, 0, 3);
+	ft_strlcpy(buff, 0, 3);
 	exit(1);
 }
 
-void strlcat_segv_test()
+void strlcpy_segv_test()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_strlcat1();
+		segv_test_strlcpy1();
 	wait(&status);
 	if (status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -31,14 +31,14 @@ void strlcat_segv_test()
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-void strlcat_segv_test2()
+void strlcpy_segv_test2()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_strlcat2();
+		segv_test_strlcpy2();
 	wait(&status);
 	if (status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -46,7 +46,7 @@ void strlcat_segv_test2()
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-void	strlcat_t(char *src, size_t len)
+void	strlcpy_t(char *src, size_t len)
 {
 	char	bo[1000];
 	char	bft[1000];
@@ -56,30 +56,29 @@ void	strlcat_t(char *src, size_t len)
 	bzero(bft, 1000);
 	str = "Lorem ipsum dolor sit amet, consectetur adipiscing\
 elit. Sed in malesuada purus. Etiam a scelerisque massa. Ut non euismod elit. Aliquam\
-bibendum dolor mi, id fringilla tellus \0pulvinar eu. Fusce vel fermentum sem. Cras\
+bibendum dolor mi, id fringilla tellus pulvinar eu. Fusce vel fermentum sem. Cras\
 volutpat, eros eget rhoncus rhoncus, diam augue egestas dolor, vitae rutrum nisi\
 felis sed purus. Mauris magna ex, mollis non suscipit eu, lacinia ac turpis. Phasellus\
 ac tortor et lectus fermentum lobortis eu at mauris. Vestibulum sit amet posuere\
 tortor, sit amet consequat amet.";
 	strlcat(bo, str, sizeof(bo));
 	strlcat(bft, str, sizeof(bft));
-	if (ft_strlcat(bft, src, len) == strlcat(bo, src, len) && !strcmp(bft, bo))
+	if (ft_strlcpy(bft, src, len) == strlcpy(bo, src, len) && !strcmp(bft, bo))
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");
 }
 
 
-void	strlcat_test()
+void	strlcpy_test()
 {
 	char	*tab[11];
 	int		len[11];
 	char	*str;
 
-	str = "strlcat: ";
-	write(1, str, strlen(str));
-	strlcat_segv_test();
-	strlcat_segv_test2();
+	printf("" YELLOW "~~~~~~~ STRLCPY TEST ~~~~~~~\n" RESET "");
+	strlcpy_segv_test();
+	strlcpy_segv_test2();
 	tab[0] = "lol";
 	tab[1] = " ";
 	tab[2] = "bon";
@@ -102,7 +101,7 @@ tortor, sit amet consequat amet.";
 	for (int i = 0; i < 11; i++)
 	{
 		for (int j = 0; j < 11; j++)
-			strlcat_t(tab[i], len[j]);
+			strlcpy_t(tab[i], len[j]);
 	}
 	printf("\n");
 }

@@ -1,55 +1,55 @@
 #include "ft_libft_test.h"
 
-char    *strjoin(char const *s1, char const *s2)
-{
-        int             size_s1;
-        int             size_s2;
-        char    *ptr;
-        int             i;
-        int             j;
 
-        i = 0;
-        j = 0;
-        if (s1 == 0 || s2 == 0)
-                return (0);
-        size_s1 = ft_strlen(s1);
-        size_s2 = ft_strlen(s2);
-        if (!(ptr = (char*)malloc(sizeof(*ptr) * (size_s1 + size_s2 + 1))))
-                return (0);
-        while (*(s1 + i))
-                ptr[j++] = *(s1 + i++);
-        i = 0;
-        while (*(s2 + i))
-                ptr[j++] = *(s2 + i++);
-        ptr[j] = '\0';
-        return (ptr);
+char	fct(unsigned int i, char c)
+{
+	return (int)c + i;
+}
+
+char	*strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char	*sptr;
+	int		index;
+
+	if (!s || !f)
+		return (NULL);
+	if (!(sptr = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1))))
+		return (NULL);
+	index = 0;
+	while (s[index])
+	{
+		sptr[index] = f(index, s[index]);
+		++index;
+	}
+	sptr[index] = '\0';
+	return (sptr);
 }
 
 
-void segv_test_strjoin1()
+void segv_test_strmapi1()
 {
 	signal(SIGSEGV, handler);
-	ft_strjoin("lol", 0);
+	ft_strmapi("lol", 0);
 	exit(1);
 }
 
-void segv_test_strjoin2()
+void segv_test_strmapi2()
 {
 	char	buff[100];
 
 	signal(SIGSEGV, handler);
-	ft_strjoin(0, "lol");
+	ft_strmapi(0, fct);
 	exit(1);
 }
 
-void strjoin_segv_test()
+void strmapi_segv_test()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_strjoin1();
+		segv_test_strmapi1();
 	wait(&status);
 	if (!status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -57,14 +57,14 @@ void strjoin_segv_test()
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-void strjoin_segv_test2()
+void strmapi_segv_test2()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_strjoin2();
+		segv_test_strmapi2();
 	wait(&status);
 	if (!status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -72,25 +72,24 @@ void strjoin_segv_test2()
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-void	strjoin_t(char *s1, char *s2)
+void	strmapi_t(char *s1)
 {
-	if (!strcmp(ft_strjoin(s1, s2), strjoin(s1, s2)))
+	if (!strcmp(ft_strmapi(s1, fct), strmapi(s1, fct)))
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");
 }
 
 
-void	strjoin_test()
+void	strmapi_test()
 {
 	char	*tab[11];
 	int		len[11];
 	char	*str;
 
-	str = "strjoin: ";
-	write(1, str, strlen(str));
-	strjoin_segv_test();
-	strjoin_segv_test2();
+	printf("" YELLOW "~~~~~~~ STRMAPI TEST ~~~~~~~\n" RESET "");
+	strmapi_segv_test();
+	strmapi_segv_test2();
 	tab[1] = "";
 	tab[2] = "bon";
 	tab[3] = "asdklfjasdfj////asdf'''asdf3##";
@@ -102,13 +101,7 @@ volutpat, eros eget rhoncus rhoncus, diam augue egestas dolor, vitae rutrum nisi
 felis sed purus. Mauris magna ex, mollis non suscipit eu, lacinia ac turpis. Phasellus\
 ac tortor et lectus fermentum lobortis eu at mauris. Vestibulum sit amet posuere\
 tortor, sit amet consequat amet.";
-	tab[6] = "\xfe\xff";
-	tab[7] = "\x02\x01";
-	tab[8] = "\x01\x02";
-	for (int i = 1; i < 9; i++)
-	{
-		for (int j = 1; j < 9; j++)
-			strjoin_t(tab[i], tab[j]);
-	}
+	for (int i = 1; i < 6; i++)
+		strmapi_t(tab[i]);
 	printf("\n");
 }

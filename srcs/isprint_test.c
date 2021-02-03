@@ -10,10 +10,7 @@ void	isprint_t(char s1)
 
 void	isprint_test()
 {
-	char	*str;
-
-	str = "isprint: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ ISPRINT TEST ~~~~~~~\n" RESET "");
 	isprint_t('0');
 	isprint_t('\xfe');
 	isprint_t('A');

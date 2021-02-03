@@ -35,7 +35,7 @@ void	strrchr_test()
 	char	*tab[11];
 	char	c[5];
 
-	write(1, "strrchr:  ", 9);
+	printf("" YELLOW "~~~~~~~ STRRCHR TEST ~~~~~~~\n" RESET "");
 	strrchr_segv_test();
 	tab[0] = "lol";
 	tab[1] = " ";

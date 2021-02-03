@@ -28,13 +28,27 @@ void	split_test()
 	int		len[11];
 	char	*str;
 
-	str = "split: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ SPLIT TEST ~~~~~~~\n" RESET "");
 	split_segv_test();
 	str = "       aaa bbbb         cc\tc      ddddd        ";
 	tab = ft_split(str, ' ');
-	if (!strcmp(tab[0], "aaa") && !strcmp(tab[1], "bbbb") && 
-	!strcmp(tab[2], "cc\tc") && !strcmp(tab[3], "ddddd") && !tab[4])
+	if (!strcmp(tab[0], "aaa"))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[K.O] " RESET "");
+	if (!strcmp(tab[1], "bbbb"))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[K.O] " RESET "");
+	if (!strcmp(tab[2], "cc\tc"))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[K.O] " RESET "");
+	if (!strcmp(tab[3], "ddddd")) 
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[K.O] " RESET "");
+	if (!tab[4])
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");

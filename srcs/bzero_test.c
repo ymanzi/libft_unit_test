@@ -1,20 +1,21 @@
+
 #include "ft_libft_test.h"
 
-void segv_test_memset()
+void segv_test_bzero()
 {
 	signal(SIGSEGV, handler);
-	ft_memset(0, 12, 5);
+	ft_bzero(0, 5);
 	exit(1);
 }
 
-void memset_segv_test()
+void bzero_segv_test()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_memset();
+		segv_test_bzero();
 	wait(&status);
 	if (status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -22,30 +23,33 @@ void memset_segv_test()
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-int memset_t(void *b, int c, size_t len)
+int bzero_t(void *b, size_t len)
 {
 	int i;
 	char *str;
 
 	i = 0;
 	str = (char*)b;
-	ft_memset(b, c, len);
+	ft_bzero(b, len);
 	while (*str++)
 		i++;
 	return (i);
 }
 
-void	memset_test()
+void	bzero_test()
 {
 	char	buf[100];
 
-	write(1, "memset: ", 8);
-	memset_segv_test();
-	if (memset_t(buf, 0, 42))
+	printf("" YELLOW "~~~~~~~ BZERO TEST ~~~~~~~\n" RESET "");
+	bzero_segv_test();
+	memset(buf, 'A', 42);
+	if (bzero_t(buf, 5))
 		printf("" RED "[K.O] " RESET "");
 	else
 		printf("" GREEN "[OK] " RESET "");
-	if (memset_t(buf, 'A', 42) != 42)
+	memset(buf, 'A', 42);
+	bzero_t(buf + 42, 5);
+	if (buf[41] != 'A' || buf[42])
 		printf("" RED "[K.O] " RESET "");
 	else
 		printf("" GREEN "[OK] " RESET "");

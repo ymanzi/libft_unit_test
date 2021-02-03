@@ -1,29 +1,29 @@
 #include "ft_libft_test.h"
 
-void segv_test_memmove1()
+void segv_test_memccpy1()
 {
 	signal(SIGSEGV, handler);
-	ft_memmove(0, "abcdef", 4);
+	ft_memccpy(0, "abcdef", 'A', 4);
 	exit(1);
 }
 
-void segv_test_memmove2()
+void segv_test_memccpy2()
 {
 	char	buff[100];
 
 	signal(SIGSEGV, handler);
-	ft_memmove(buff, 0, 3);
+	ft_memccpy(buff, 0, 'A', 3);
 	exit(1);
 }
 
-void memmove_segv_test()
+void memccpy_segv_test()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_memmove1();
+		segv_test_memccpy1();
 	wait(&status);
 	if (status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -31,14 +31,14 @@ void memmove_segv_test()
 		printf("" GREEN "[SEGV OK] " RESET "");
 }
 
-void memmove_segv_test2()
+void memccpy_segv_test2()
 {
 	int pid;
 	int	status;
 
 	pid = fork();
 	if (!pid)
-		segv_test_memmove2();
+		segv_test_memccpy2();
 	wait(&status);
 	if (status)
 		printf("" RED "[SEGV K.O] " RESET "");
@@ -47,34 +47,37 @@ void memmove_segv_test2()
 }
 
 
-void	memmove_test()
+void	memccpy_test()
 {
 	char	buff[100];
-	char	*str;
 	char	*ret;
 
 	bzero(buff, 100);
-	str = "memmove: ";
-	write(1, str, strlen(str));
-	memmove_segv_test();
-	memmove_segv_test2();
-	ft_memmove(buff, "abcdef", 6);
-	if (!strcmp(buff, "abcdef"))
+	printf("" YELLOW "~~~~~~~ MEMCCPY TEST ~~~~~~~\n" RESET "");
+	memccpy_segv_test();
+	memccpy_segv_test2();
+	ret = ft_memccpy(buff, "abcdef", 'g',   6);
+	if (!strcmp(buff, "abcdef") && !ret)
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");
-	ret = ft_memmove(buff + 1, buff + 1, 5);
-	if (!strcmp(buff, "abcdef") && !strcmp(buff + 1, ret))
+	ret = ft_memccpy(buff, "abcdef", 'e', 4);
+	if (!strcmp(buff, "abcdef") && !ret)
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");
-	ret = ft_memmove(buff + 1, buff, 5);
-	if (!strcmp(buff, "aabcde") && !strcmp(buff + 1, ret))
+	ret = ft_memccpy(buff, "abcdef", 'c', 3);
+	if (!strcmp(buff, "abcdef") && !strcmp(ret, "def"))
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");
-	ret = ft_memmove(buff, "abcdef", 3);
-	if (!strcmp(buff, "abccde") && !strcmp(buff, ret))
+	ret = ft_memccpy(buff, "abcdef", 'c', 3);
+	if (!strcmp(buff, "abcdef") && !strcmp(ret, "def"))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[K.O] " RESET "");
+	ret = ft_memccpy(buff, "abcdef", 0, 10);
+	if (!strcmp(buff, "abcdef") && !(*ret))
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");

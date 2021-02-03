@@ -4,6 +4,8 @@
 # define RESET   "\033[0m"
 # define RED     "\033[31m"
 # define GREEN   "\033[32m"
+# define YELLOW	 "\033[33m"
+# define CYN 	 "\e[1;96m"
 
 #include "libft.h"
 #include <string.h>
@@ -37,9 +39,12 @@ void	isascii_test();
 void	isprint_test();
 void	toupper_test();
 void	tolower_test();
+void	strdup_test();
 void	substr_test();
 void	strjoin_test();
 void	strtrim_test();
 void	split_test();
+void	itoa_test();
+void	strmapi_test();
 
 #	endif

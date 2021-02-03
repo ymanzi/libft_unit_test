@@ -7,7 +7,7 @@ void handler(int num)
 
 int main(void)
 {
-	printf("-----------------PART1--------------------\n");
+	printf("" CYN "-------------- PART1 ------------\n" RESET "");
 	memset_test();
 	bzero_test();
 	memcpy_test();
@@ -30,11 +30,14 @@ int main(void)
 	isprint_test();
 	toupper_test();
 	tolower_test();
-	printf("-----------------PART2--------------------\n");
+	strdup_test();
+	printf("" CYN "----------------- PART2 ------------\n" RESET "");
 	substr_test();
 	strjoin_test();
 	strtrim_test();
 	split_test();
+	itoa_test();
+	strmapi_test();
 
 	return (0);
 }

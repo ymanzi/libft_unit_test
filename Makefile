@@ -10,24 +10,31 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-NAME = philo.a
-LIBFT = ../../libft
+LIBFT_PATH = ../libft
 CFLAGS = #-Wall -Wextra -Werror 
-SRCS = main.c memcpy_test.c bzero_test.c memset_test.c memccpy_test.c \
-		memmove_test.c memchr_test.c memcmp_test.c strlen_test.c strlcpy_test.c \
-		strlcat_test.c strchr_test.c strrchr_test.c strnstr_test.c \
-		strncmp_test.c atoi_test.c isalpha_test.c isdigit_test.c isalnum_test.c \
-		isascii_test.c isprint_test.c toupper_test.c tolower_test.c \
-		substr_test.c strjoin_test.c strtrim_test.c split_test.c 
-OBJ = $(SRCS:.c=.o)
-EXEC = part1
+SRCS = ./srcs/*.c
+BONUS = ./bonus/*.c
+EXEC = libft_test
+EXEC_BONUS = bonus_test
+CC = gcc
+
+$(EXEC): all
 
 all:
-	cp $(LIBFT)/libft.a $(LIBFT)/libft.h . 
-	gcc $(CFLAGS) $(SRCS) ../libft/libft.a -o $(EXEC)
+	(cd $(LIBFT_PATH) && $(MAKE))
+	cp $(LIBFT_PATH)/libft.h srcs
+	cp $(LIBFT_PATH)/libft.a .  
+	$(CC) $(CFLAGS) $(SRCS) $(LIBFT_PATH)/libft.a -o $(EXEC)
+
+run: all
+	./$(EXEC)
+
+bonus: all
+	(cd $(LIBFT_PATH) && $(MAKE) bonus)
+	$(CC) $(CFLAGS) $(BONUS) $(LIBFT_PATH)/libft.a -o $(EXEC_BONUS)
+	./$(EXEC_BONUS)
 
 clean:
-		rm -f $(EXEC) libft.a libft.h
+	rm -f $(EXEC) $(EXEC_BONUS) libft.a libft.h 
 fclean: clean
 re: fclean all

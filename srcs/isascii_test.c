@@ -10,10 +10,7 @@ void	isascii_t(int s1)
 
 void	isascii_test()
 {
-	char	*str;
-
-	str = "isascii: ";
-	write(1, str, strlen(str));
+	printf("" YELLOW "~~~~~~~ ISASCII TEST ~~~~~~~\n" RESET "");
 	isascii_t('0');
 	isascii_t('\xfe');
 	isascii_t('A');
