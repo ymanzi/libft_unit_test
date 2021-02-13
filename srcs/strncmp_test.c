@@ -48,7 +48,14 @@ void strncmp_segv_test2()
 
 void	strncmp_t(char *s1, char *s2, size_t n)
 {
-	if (ft_strncmp(s1, s2, n) == strncmp(s1, s2, n))
+	int check = 1;
+	int ret_r = strncmp(s1, s2, n);
+	int ret_ft = ft_strncmp(s1, s2, n);
+	if ( ret_r == 0 && ret_ft != 0)
+		check = 0;
+	else if ((ret_r * ret_ft) < 0)
+		check = 0;
+	if (check)
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[K.O] " RESET "");
